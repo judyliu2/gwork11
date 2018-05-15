@@ -32,7 +32,7 @@ def run(filename):
     color = [0, 0, 0]
     tmp = new_matrix()
     ident( tmp )
-
+    systems = []
     stack = [ [x[:] for x in tmp] ]
     screen = new_screen()
     zbuffer = new_zbuffer()
@@ -53,10 +53,10 @@ def run(filename):
         for i in range (0, len(p[0])):
                 
             if (p[0][i] == "push"):
-                stacks.append( [x[:] for x in stacks[-1]] )
+                systems.append( [x[:] for x in systems[-1]] )
                 
             if (p[0][i] == "pop"):
-                stacks.pop()
+                systems.pop()
                 
             if (p[0][i] == "save"):
                 save_extension(screen, args[0])
@@ -68,7 +68,7 @@ def run(filename):
                 add_sphere(polygons,
                        float(args[0]), float(args[1]), float(args[2]),
                        float(args[3]), step_3d)
-                matrix_mult( stacks[-1], polygons )
+                matrix_mult( systems[-1], polygons )
                 draw_polygons(polygons, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
                 polygons = []
                 
@@ -76,7 +76,7 @@ def run(filename):
                 add_torus(polygons,
                       float(args[0]), float(args[1]), float(args[2]),
                       float(args[3]), float(args[4]), step_3d)
-                matrix_mult( stacks[-1], polygons )
+                matrix_mult( systems[-1], polygons )
                 draw_polygons(polygons, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
                 polygons = []
 
@@ -84,7 +84,7 @@ def run(filename):
                 add_torus(polygons,
                       float(args[0]), float(args[1]), float(args[2]),
                       float(args[3]), float(args[4]), step_3d)
-                matrix_mult( stacks[-1], polygons )
+                matrix_mult( systems[-1], polygons )
                 draw_polygons(polygons, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
                 polygons = []
                 
