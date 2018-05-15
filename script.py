@@ -44,7 +44,7 @@ def run(filename):
 
     if p:
         (commands, symbols) = p
-        print commands
+    
         """
         Every opcode is a tuple of the form
         (commandname, parameter, parameter, ...).
