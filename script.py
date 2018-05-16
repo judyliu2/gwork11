@@ -33,6 +33,7 @@ def run(filename):
     tmp = new_matrix()
     ident( tmp )
     systems = [tmp]
+    edges =[]
     polygons = []
     stack = [ [x[:] for x in tmp] ]
     screen = new_screen()
@@ -50,20 +51,28 @@ def run(filename):
         (commandname, parameter, parameter, ...).
         Every symbol is a tuple of the form (type, name).
         """
-     
         for args in commands:
+            if (args[0] != 'rotate' and args[0] != 'save' and args[0] !='display'):
+                temp = [args[0]]
+                for a in args[1:]:
+                    if isinstance(a, float):
+                        temp.append(a)
+                args = tuple(temp)
+                
             operation = args[0]
+            
             if (operation == 'push'):
                 systems.append( [x[:] for x in systems[-1]] )
                 
             elif (operation == 'pop'):
                 systems.pop()
                 
-            elif (operation == 'save'):
-                save_extension(screen, args[1])
-
-            elif (operation == 'display'):
-                display(screen)
+            elif (operation == 'display' or operation == 'save'):
+                if (operation == 'display'):
+                    display(screen)
+                else:
+                    save_extension(screen, args[1]+args[2])
+                    
                 
             elif (operation == 'sphere'):
                 add_sphere(polygons,
